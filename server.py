@@ -84,16 +84,19 @@ def update(entity):
 @app.route("/world", methods=['POST','GET'])    
 def world():
     '''you should probably return the world here'''
+    world = myWorld.world()
     return None
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
+    entity_representation = myWorld.get(entity)
     return None
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     '''Clear the world out!'''
+    myWorld.clear()
     return None
 
 if __name__ == "__main__":
