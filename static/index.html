@@ -74,8 +74,16 @@ function drawCircle(context,entity) {
         //moveTo(x,y);
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
-        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
-        stroke();                                
+        //arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);
+        // Smiley code from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
+        arc(x, y, 50, 0,Math.PI*2,true); // Outer circle
+        moveTo(x+35, y);
+        arc(x, y, 35, 0,Math.PI,false);  // Mouth (clockwise)
+        moveTo(x-10, y-10);
+        arc(x-15, y-10, 5, 0,Math.PI*2,true);  // Left eye
+        moveTo(x+20, y-10);
+        arc(x+15, y-10, 5, 0,Math.PI*2,true);  // Right eye
+        stroke();                            
     }
 }
 
@@ -258,28 +266,17 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'blue', 'radius':50});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'red', 'raidus':50});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':getRandomColor,
-                          'radius':10});
+    addEntityWithoutName({'x':x,'y':y,'colour':'yellow', 'radius':10});
 });
 
-
-// random color generator from http://stackoverflow.com/a/1484514
-function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
 
 function updateWorld(data) {
     world = data;
